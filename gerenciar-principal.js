@@ -1,71 +1,31 @@
-const db = firebase.firestore();
-const messaging = firebase.messaging();
-const uid = localStorage.getItem('Uid');
-
-try {
-
-    db.collection("Notificações").where("enviadoPor", "==", uid).orderBy("data_hora", "desc").get()
-        .then((docref) => {
-
-            if (docref.docs.length == 0) {
-                const p = document.querySelector("p[class='textoPrincipal']");
-                p.innerHTML = "Você não cadastrou nenhuma notificação :/"
-            } else {
-
-                const recyclerView = document.querySelector('.recyclerview');
-
-                const notificacao = docref.docs.reduce((acc, doc) => {
-
-                    if (doc.data().link === "") {
-
-                        acc += `<div class="container-externo">
+const db=firebase.firestore(),messaging=firebase.messaging(),uid=localStorage.getItem("Uid");try{db.collection("Notifica\xE7\xF5es").where("enviadoPor","==",uid).orderBy("data_hora","desc").get().then(a=>{if(0==a.docs.length){const a=document.querySelector("p[class='textoPrincipal']");a.innerHTML="Voc\xEA n\xE3o cadastrou nenhuma notifica\xE7\xE3o :/"}else{const b=document.querySelector(".recyclerview"),c=a.docs.reduce((a,b)=>""===b.data().link?(a+=`<div class="container-externo">
                                         <div class="conteudo">
                                             <div class="texto">
-                                                <h1>${doc.data().title}</h1>
-                                                <h3>${doc.data().body}</h3>
-                                                <h6>UidRemetente: ${doc.data().enviadoPor}</h6>
-                                                <h6>Destinatario(s): ${doc.data().enviadoPara}</h6>
-                                                <h6>Aberto(s): ${doc.data().aberto}</h6>
-                                                <h6>Data de envio: ${doc.data().data_hora}</h6>
+                                                <h1>${b.data().title}</h1>
+                                                <h3>${b.data().body}</h3>
+                                                <h6>UidRemetente: ${b.data().enviadoPor}</h6>
+                                                <h6>Destinatario(s): ${b.data().enviadoPara}</h6>
+                                                <h6>Aberto(s): ${b.data().aberto}</h6>
+                                                <h6>Data de envio: ${b.data().data_hora}</h6>
                                             </div>
                                             <div class="imagem">
-                                                <img src="${doc.data().url}" alt="Imagem">
+                                                <img src="${b.data().url}" alt="Imagem">
                                             </div>
                                         </div>
-                                    </div>`
-                        return acc
-
-                    } else {
-
-                        acc += `<a class="link" href="${doc.data().link}" target="_blank">
+                                    </div>`,a):(a+=`<a class="link" href="${b.data().link}" target="_blank">
                                         <div class="container-externo">
                                             <div class="conteudo">
                                                 <div class="texto">
-                                                    <h1>${doc.data().title}</h1>
-                                                    <h3>${doc.data().body}</h3>
-                                                    <h6>Uidremetente: ${doc.data().enviadoPor}</h6>
-                                                    <h6>Destinatario(s): ${doc.data().enviadoPara}</h6>
-                                                    <h6>Aberto(s): ${doc.data().aberto}</h6>
-                                                    <h6>Data de envio: ${doc.data().data_hora}</h6>
+                                                    <h1>${b.data().title}</h1>
+                                                    <h3>${b.data().body}</h3>
+                                                    <h6>Uidremetente: ${b.data().enviadoPor}</h6>
+                                                    <h6>Destinatario(s): ${b.data().enviadoPara}</h6>
+                                                    <h6>Aberto(s): ${b.data().aberto}</h6>
+                                                    <h6>Data de envio: ${b.data().data_hora}</h6>
                                                 </div>
                                                 <div class="imagem">
-                                                    <img src="${doc.data().url}" alt="Imagem">
+                                                    <img src="${b.data().url}" alt="Imagem">
                                                 </div>
                                             </div>
                                         </div>
-                                    </a>`
-                        return acc
-                    }
-                }, '')
-                recyclerView.innerHTML = notificacao;
-
-            }
-        })
-        .catch((error) => {
-            alert(error.message);
-        })
-} catch (err) {
-
-    alert('Erro ' + err);
-
-}
+                                    </a>`,a),"");b.innerHTML=c}}).catch(a=>{alert(a.message)})}catch(a){alert("Erro "+a)}
